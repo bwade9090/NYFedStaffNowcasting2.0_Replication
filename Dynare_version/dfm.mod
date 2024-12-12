@@ -180,25 +180,21 @@ parameters
     gamma_e_GDP
     gamma_e_GNI
 ;
+mu_AllIndustryProduction = 0.26921;
+mu_ManufacturingProduction = 0.33835;
+mu_ServiceActivities = 0.26206;
+mu_RetailSales = 0.25208;
+mu_EquipmentInvestment = 0.42314;
+mu_ConstructionCompleted = 0.56056;
+mu_UnemploymentBenefitApplications = 0.71662;
+mu_CustomsExportAmount = 0.75787;
+mu_GDP = 0.29331;
+mu_GNI = 0.2683;
 varexo
-    outlier_f_All
-    outlier_f_Trend
-    outlier_f_Export
-    outlier_f_DomesticDemand
     epsilon_f_All
     epsilon_f_Trend
     epsilon_f_Export
     epsilon_f_DomesticDemand
-    outlier_e_AllIndustryProduction
-    outlier_e_ManufacturingProduction
-    outlier_e_ServiceActivities
-    outlier_e_RetailSales
-    outlier_e_EquipmentInvestment
-    outlier_e_ConstructionCompleted
-    outlier_e_UnemploymentBenefitApplications
-    outlier_e_CustomsExportAmount
-    outlier_e_GDP
-    outlier_e_GNI
     epsilon_e_AllIndustryProduction
     epsilon_e_ManufacturingProduction
     epsilon_e_ServiceActivities
@@ -226,6 +222,22 @@ varexo
     upsilon_e_GDP
     upsilon_e_GNI
 ;
+varexo_det
+    outlier_f_All
+    outlier_f_Trend
+    outlier_f_Export
+    outlier_f_DomesticDemand
+    outlier_e_AllIndustryProduction
+    outlier_e_ManufacturingProduction
+    outlier_e_ServiceActivities
+    outlier_e_RetailSales
+    outlier_e_EquipmentInvestment
+    outlier_e_ConstructionCompleted
+    outlier_e_UnemploymentBenefitApplications
+    outlier_e_CustomsExportAmount
+    outlier_e_GDP
+    outlier_e_GNI
+;
 model;
     AllIndustryProduction_OBS=AllIndustryProduction;
     ManufacturingProduction_OBS=ManufacturingProduction;
@@ -247,20 +259,20 @@ model;
     CustomsExportAmount=mu_CustomsExportAmount + lambda_CustomsExportAmount_All*Factor_All + lambda_CustomsExportAmount_Export*Factor_Export + Error_CustomsExportAmount;
     GDP=mu_GDP + Trend_GDP + lambda_GDP_All*Factor_All + lambda_GDP_Trend*Factor_Trend + Error_GDP;
     GNI=mu_GNI + Trend_GNI + lambda_GNI_All*Factor_All + lambda_GNI_Trend*Factor_Trend + Error_GNI;
-    Factor_All=phi_f_All_All_lag1*Factor_All(-1) + phi_f_All_Trend_lag1*Factor_Trend(-1) + phi_f_All_Export_lag1*Factor_Export(-1) + phi_f_All_DomesticDemand_lag1*Factor_DomesticDemand(-1) + phi_f_All_All_lag2*Factor_All(-2) + phi_f_All_Trend_lag2*Factor_Trend(-2) + phi_f_All_Export_lag2*Factor_Export(-2) + phi_f_All_DomesticDemand_lag2*Factor_DomesticDemand(-2) + phi_f_All_All_lag3*Factor_All(-3) + phi_f_All_Trend_lag3*Factor_Trend(-3) + phi_f_All_Export_lag3*Factor_Export(-3) + phi_f_All_DomesticDemand_lag3*Factor_DomesticDemand(-3) + phi_f_All_All_lag4*Factor_All(-4) + phi_f_All_Trend_lag4*Factor_Trend(-4) + phi_f_All_Export_lag4*Factor_Export(-4) + phi_f_All_DomesticDemand_lag4*Factor_DomesticDemand(-4) + sigma_f_All*outlier_f_All*epsilon_f_All;
-    Factor_Trend=phi_f_Trend_All_lag1*Factor_All(-1) + phi_f_Trend_Trend_lag1*Factor_Trend(-1) + phi_f_Trend_Export_lag1*Factor_Export(-1) + phi_f_Trend_DomesticDemand_lag1*Factor_DomesticDemand(-1) + phi_f_Trend_All_lag2*Factor_All(-2) + phi_f_Trend_Trend_lag2*Factor_Trend(-2) + phi_f_Trend_Export_lag2*Factor_Export(-2) + phi_f_Trend_DomesticDemand_lag2*Factor_DomesticDemand(-2) + phi_f_Trend_All_lag3*Factor_All(-3) + phi_f_Trend_Trend_lag3*Factor_Trend(-3) + phi_f_Trend_Export_lag3*Factor_Export(-3) + phi_f_Trend_DomesticDemand_lag3*Factor_DomesticDemand(-3) + phi_f_Trend_All_lag4*Factor_All(-4) + phi_f_Trend_Trend_lag4*Factor_Trend(-4) + phi_f_Trend_Export_lag4*Factor_Export(-4) + phi_f_Trend_DomesticDemand_lag4*Factor_DomesticDemand(-4) + sigma_f_Trend*outlier_f_Trend*epsilon_f_Trend;
-    Factor_Export=phi_f_Export_All_lag1*Factor_All(-1) + phi_f_Export_Trend_lag1*Factor_Trend(-1) + phi_f_Export_Export_lag1*Factor_Export(-1) + phi_f_Export_DomesticDemand_lag1*Factor_DomesticDemand(-1) + phi_f_Export_All_lag2*Factor_All(-2) + phi_f_Export_Trend_lag2*Factor_Trend(-2) + phi_f_Export_Export_lag2*Factor_Export(-2) + phi_f_Export_DomesticDemand_lag2*Factor_DomesticDemand(-2) + phi_f_Export_All_lag3*Factor_All(-3) + phi_f_Export_Trend_lag3*Factor_Trend(-3) + phi_f_Export_Export_lag3*Factor_Export(-3) + phi_f_Export_DomesticDemand_lag3*Factor_DomesticDemand(-3) + phi_f_Export_All_lag4*Factor_All(-4) + phi_f_Export_Trend_lag4*Factor_Trend(-4) + phi_f_Export_Export_lag4*Factor_Export(-4) + phi_f_Export_DomesticDemand_lag4*Factor_DomesticDemand(-4) + sigma_f_Export*outlier_f_Export*epsilon_f_Export;
-    Factor_DomesticDemand=phi_f_DomesticDemand_All_lag1*Factor_All(-1) + phi_f_DomesticDemand_Trend_lag1*Factor_Trend(-1) + phi_f_DomesticDemand_Export_lag1*Factor_Export(-1) + phi_f_DomesticDemand_DomesticDemand_lag1*Factor_DomesticDemand(-1) + phi_f_DomesticDemand_All_lag2*Factor_All(-2) + phi_f_DomesticDemand_Trend_lag2*Factor_Trend(-2) + phi_f_DomesticDemand_Export_lag2*Factor_Export(-2) + phi_f_DomesticDemand_DomesticDemand_lag2*Factor_DomesticDemand(-2) + phi_f_DomesticDemand_All_lag3*Factor_All(-3) + phi_f_DomesticDemand_Trend_lag3*Factor_Trend(-3) + phi_f_DomesticDemand_Export_lag3*Factor_Export(-3) + phi_f_DomesticDemand_DomesticDemand_lag3*Factor_DomesticDemand(-3) + phi_f_DomesticDemand_All_lag4*Factor_All(-4) + phi_f_DomesticDemand_Trend_lag4*Factor_Trend(-4) + phi_f_DomesticDemand_Export_lag4*Factor_Export(-4) + phi_f_DomesticDemand_DomesticDemand_lag4*Factor_DomesticDemand(-4) + sigma_f_DomesticDemand*outlier_f_DomesticDemand*epsilon_f_DomesticDemand;
-    Error_AllIndustryProduction=phi_e_AllIndustryProduction_lag1*Error_AllIndustryProduction(-1) + phi_e_AllIndustryProduction_lag2*Error_AllIndustryProduction(-2) + sigma_e_AllIndustryProduction*outlier_e_AllIndustryProduction*epsilon_e_AllIndustryProduction;
-    Error_ManufacturingProduction=phi_e_ManufacturingProduction_lag1*Error_ManufacturingProduction(-1) + phi_e_ManufacturingProduction_lag2*Error_ManufacturingProduction(-2) + sigma_e_ManufacturingProduction*outlier_e_ManufacturingProduction*epsilon_e_ManufacturingProduction;
-    Error_ServiceActivities=phi_e_ServiceActivities_lag1*Error_ServiceActivities(-1) + phi_e_ServiceActivities_lag2*Error_ServiceActivities(-2) + sigma_e_ServiceActivities*outlier_e_ServiceActivities*epsilon_e_ServiceActivities;
-    Error_RetailSales=phi_e_RetailSales_lag1*Error_RetailSales(-1) + phi_e_RetailSales_lag2*Error_RetailSales(-2) + sigma_e_RetailSales*outlier_e_RetailSales*epsilon_e_RetailSales;
-    Error_EquipmentInvestment=phi_e_EquipmentInvestment_lag1*Error_EquipmentInvestment(-1) + phi_e_EquipmentInvestment_lag2*Error_EquipmentInvestment(-2) + sigma_e_EquipmentInvestment*outlier_e_EquipmentInvestment*epsilon_e_EquipmentInvestment;
-    Error_ConstructionCompleted=phi_e_ConstructionCompleted_lag1*Error_ConstructionCompleted(-1) + phi_e_ConstructionCompleted_lag2*Error_ConstructionCompleted(-2) + sigma_e_ConstructionCompleted*outlier_e_ConstructionCompleted*epsilon_e_ConstructionCompleted;
-    Error_UnemploymentBenefitApplications=phi_e_UnemploymentBenefitApplications_lag1*Error_UnemploymentBenefitApplications(-1) + phi_e_UnemploymentBenefitApplications_lag2*Error_UnemploymentBenefitApplications(-2) + sigma_e_UnemploymentBenefitApplications*outlier_e_UnemploymentBenefitApplications*epsilon_e_UnemploymentBenefitApplications;
-    Error_CustomsExportAmount=phi_e_CustomsExportAmount_lag1*Error_CustomsExportAmount(-1) + phi_e_CustomsExportAmount_lag2*Error_CustomsExportAmount(-2) + sigma_e_CustomsExportAmount*outlier_e_CustomsExportAmount*epsilon_e_CustomsExportAmount;
-    Error_GDP=phi_e_GDP_lag1*Error_GDP(-1) + phi_e_GDP_lag2*Error_GDP(-2) + sigma_e_GDP*outlier_e_GDP*epsilon_e_GDP;
-    Error_GNI=phi_e_GNI_lag1*Error_GNI(-1) + phi_e_GNI_lag2*Error_GNI(-2) + sigma_e_GNI*outlier_e_GNI*epsilon_e_GNI;
+    Factor_All=phi_f_All_All_lag1*Factor_All(-1) + phi_f_All_Trend_lag1*Factor_Trend(-1) + phi_f_All_Export_lag1*Factor_Export(-1) + phi_f_All_DomesticDemand_lag1*Factor_DomesticDemand(-1) + phi_f_All_All_lag2*Factor_All(-2) + phi_f_All_Trend_lag2*Factor_Trend(-2) + phi_f_All_Export_lag2*Factor_Export(-2) + phi_f_All_DomesticDemand_lag2*Factor_DomesticDemand(-2) + phi_f_All_All_lag3*Factor_All(-3) + phi_f_All_Trend_lag3*Factor_Trend(-3) + phi_f_All_Export_lag3*Factor_Export(-3) + phi_f_All_DomesticDemand_lag3*Factor_DomesticDemand(-3) + phi_f_All_All_lag4*Factor_All(-4) + phi_f_All_Trend_lag4*Factor_Trend(-4) + phi_f_All_Export_lag4*Factor_Export(-4) + phi_f_All_DomesticDemand_lag4*Factor_DomesticDemand(-4) + sigma_f_All*exp(outlier_f_All)*epsilon_f_All;
+    Factor_Trend=phi_f_Trend_All_lag1*Factor_All(-1) + phi_f_Trend_Trend_lag1*Factor_Trend(-1) + phi_f_Trend_Export_lag1*Factor_Export(-1) + phi_f_Trend_DomesticDemand_lag1*Factor_DomesticDemand(-1) + phi_f_Trend_All_lag2*Factor_All(-2) + phi_f_Trend_Trend_lag2*Factor_Trend(-2) + phi_f_Trend_Export_lag2*Factor_Export(-2) + phi_f_Trend_DomesticDemand_lag2*Factor_DomesticDemand(-2) + phi_f_Trend_All_lag3*Factor_All(-3) + phi_f_Trend_Trend_lag3*Factor_Trend(-3) + phi_f_Trend_Export_lag3*Factor_Export(-3) + phi_f_Trend_DomesticDemand_lag3*Factor_DomesticDemand(-3) + phi_f_Trend_All_lag4*Factor_All(-4) + phi_f_Trend_Trend_lag4*Factor_Trend(-4) + phi_f_Trend_Export_lag4*Factor_Export(-4) + phi_f_Trend_DomesticDemand_lag4*Factor_DomesticDemand(-4) + sigma_f_Trend*exp(outlier_f_Trend)*epsilon_f_Trend;
+    Factor_Export=phi_f_Export_All_lag1*Factor_All(-1) + phi_f_Export_Trend_lag1*Factor_Trend(-1) + phi_f_Export_Export_lag1*Factor_Export(-1) + phi_f_Export_DomesticDemand_lag1*Factor_DomesticDemand(-1) + phi_f_Export_All_lag2*Factor_All(-2) + phi_f_Export_Trend_lag2*Factor_Trend(-2) + phi_f_Export_Export_lag2*Factor_Export(-2) + phi_f_Export_DomesticDemand_lag2*Factor_DomesticDemand(-2) + phi_f_Export_All_lag3*Factor_All(-3) + phi_f_Export_Trend_lag3*Factor_Trend(-3) + phi_f_Export_Export_lag3*Factor_Export(-3) + phi_f_Export_DomesticDemand_lag3*Factor_DomesticDemand(-3) + phi_f_Export_All_lag4*Factor_All(-4) + phi_f_Export_Trend_lag4*Factor_Trend(-4) + phi_f_Export_Export_lag4*Factor_Export(-4) + phi_f_Export_DomesticDemand_lag4*Factor_DomesticDemand(-4) + sigma_f_Export*exp(outlier_f_Export)*epsilon_f_Export;
+    Factor_DomesticDemand=phi_f_DomesticDemand_All_lag1*Factor_All(-1) + phi_f_DomesticDemand_Trend_lag1*Factor_Trend(-1) + phi_f_DomesticDemand_Export_lag1*Factor_Export(-1) + phi_f_DomesticDemand_DomesticDemand_lag1*Factor_DomesticDemand(-1) + phi_f_DomesticDemand_All_lag2*Factor_All(-2) + phi_f_DomesticDemand_Trend_lag2*Factor_Trend(-2) + phi_f_DomesticDemand_Export_lag2*Factor_Export(-2) + phi_f_DomesticDemand_DomesticDemand_lag2*Factor_DomesticDemand(-2) + phi_f_DomesticDemand_All_lag3*Factor_All(-3) + phi_f_DomesticDemand_Trend_lag3*Factor_Trend(-3) + phi_f_DomesticDemand_Export_lag3*Factor_Export(-3) + phi_f_DomesticDemand_DomesticDemand_lag3*Factor_DomesticDemand(-3) + phi_f_DomesticDemand_All_lag4*Factor_All(-4) + phi_f_DomesticDemand_Trend_lag4*Factor_Trend(-4) + phi_f_DomesticDemand_Export_lag4*Factor_Export(-4) + phi_f_DomesticDemand_DomesticDemand_lag4*Factor_DomesticDemand(-4) + sigma_f_DomesticDemand*exp(outlier_f_DomesticDemand)*epsilon_f_DomesticDemand;
+    Error_AllIndustryProduction=phi_e_AllIndustryProduction_lag1*Error_AllIndustryProduction(-1) + phi_e_AllIndustryProduction_lag2*Error_AllIndustryProduction(-2) + sigma_e_AllIndustryProduction*exp(outlier_e_AllIndustryProduction)*epsilon_e_AllIndustryProduction;
+    Error_ManufacturingProduction=phi_e_ManufacturingProduction_lag1*Error_ManufacturingProduction(-1) + phi_e_ManufacturingProduction_lag2*Error_ManufacturingProduction(-2) + sigma_e_ManufacturingProduction*exp(outlier_e_ManufacturingProduction)*epsilon_e_ManufacturingProduction;
+    Error_ServiceActivities=phi_e_ServiceActivities_lag1*Error_ServiceActivities(-1) + phi_e_ServiceActivities_lag2*Error_ServiceActivities(-2) + sigma_e_ServiceActivities*exp(outlier_e_ServiceActivities)*epsilon_e_ServiceActivities;
+    Error_RetailSales=phi_e_RetailSales_lag1*Error_RetailSales(-1) + phi_e_RetailSales_lag2*Error_RetailSales(-2) + sigma_e_RetailSales*exp(outlier_e_RetailSales)*epsilon_e_RetailSales;
+    Error_EquipmentInvestment=phi_e_EquipmentInvestment_lag1*Error_EquipmentInvestment(-1) + phi_e_EquipmentInvestment_lag2*Error_EquipmentInvestment(-2) + sigma_e_EquipmentInvestment*exp(outlier_e_EquipmentInvestment)*epsilon_e_EquipmentInvestment;
+    Error_ConstructionCompleted=phi_e_ConstructionCompleted_lag1*Error_ConstructionCompleted(-1) + phi_e_ConstructionCompleted_lag2*Error_ConstructionCompleted(-2) + sigma_e_ConstructionCompleted*exp(outlier_e_ConstructionCompleted)*epsilon_e_ConstructionCompleted;
+    Error_UnemploymentBenefitApplications=phi_e_UnemploymentBenefitApplications_lag1*Error_UnemploymentBenefitApplications(-1) + phi_e_UnemploymentBenefitApplications_lag2*Error_UnemploymentBenefitApplications(-2) + sigma_e_UnemploymentBenefitApplications*exp(outlier_e_UnemploymentBenefitApplications)*epsilon_e_UnemploymentBenefitApplications;
+    Error_CustomsExportAmount=phi_e_CustomsExportAmount_lag1*Error_CustomsExportAmount(-1) + phi_e_CustomsExportAmount_lag2*Error_CustomsExportAmount(-2) + sigma_e_CustomsExportAmount*exp(outlier_e_CustomsExportAmount)*epsilon_e_CustomsExportAmount;
+    Error_GDP=phi_e_GDP_lag1*Error_GDP(-1) + phi_e_GDP_lag2*Error_GDP(-2) + sigma_e_GDP*exp(outlier_e_GDP)*epsilon_e_GDP;
+    Error_GNI=phi_e_GNI_lag1*Error_GNI(-1) + phi_e_GNI_lag2*Error_GNI(-2) + sigma_e_GNI*exp(outlier_e_GNI)*epsilon_e_GNI;
     Trend_GDP=Trend_GDP(-1) + gamma_g_GDP*upsilon_g_GDP;
     Trend_GNI=Trend_GNI(-1) + gamma_g_GNI*upsilon_g_GNI;
     log(sigma_f_All^2)=log(sigma_f_All(-1)^2) + gamma_f_All*upsilon_f_All;
@@ -277,6 +289,58 @@ model;
     log(sigma_e_CustomsExportAmount^2)=log(sigma_e_CustomsExportAmount(-1)^2) + gamma_e_CustomsExportAmount*upsilon_e_CustomsExportAmount;
     log(sigma_e_GDP^2)=log(sigma_e_GDP(-1)^2) + gamma_e_GDP*upsilon_e_GDP;
     log(sigma_e_GNI^2)=log(sigma_e_GNI(-1)^2) + gamma_e_GNI*upsilon_e_GNI;
+end;
+steady_state_model;
+    AllIndustryProduction_OBS = mu_AllIndustryProduction;
+    ManufacturingProduction_OBS = mu_ManufacturingProduction;
+    ServiceActivities_OBS = mu_ServiceActivities;
+    RetailSales_OBS = mu_RetailSales;
+    EquipmentInvestment_OBS = mu_EquipmentInvestment;
+    ConstructionCompleted_OBS = mu_ConstructionCompleted;
+    UnemploymentBenefitApplications_OBS = mu_UnemploymentBenefitApplications;
+    CustomsExportAmount_OBS = mu_CustomsExportAmount;
+    GDP_OBS = 3*mu_GDP;
+    GNI_OBS = 3*mu_GNI;
+    AllIndustryProduction = mu_AllIndustryProduction;
+    ManufacturingProduction = mu_ManufacturingProduction;
+    ServiceActivities = mu_ServiceActivities;
+    RetailSales = mu_RetailSales;
+    EquipmentInvestment = mu_EquipmentInvestment;
+    ConstructionCompleted = mu_ConstructionCompleted;
+    UnemploymentBenefitApplications = mu_UnemploymentBenefitApplications;
+    CustomsExportAmount = mu_CustomsExportAmount;
+    GDP = mu_GDP;
+    GNI = mu_GNI;
+    Factor_All = 0;
+    Factor_Trend = 0;
+    Factor_Export = 0;
+    Factor_DomesticDemand = 0;
+    Error_AllIndustryProduction = 0;
+    Error_ManufacturingProduction = 0;
+    Error_ServiceActivities = 0;
+    Error_RetailSales = 0;
+    Error_EquipmentInvestment = 0;
+    Error_ConstructionCompleted = 0;
+    Error_UnemploymentBenefitApplications = 0;
+    Error_CustomsExportAmount = 0;
+    Error_GDP = 0;
+    Error_GNI = 0;
+    Trend_GDP = 0;
+    Trend_GNI = 0;
+    sigma_f_All = 1;
+    sigma_f_Trend = 1;
+    sigma_f_Export = 1;
+    sigma_f_DomesticDemand = 1;
+    sigma_e_AllIndustryProduction = 1;
+    sigma_e_ManufacturingProduction = 1;
+    sigma_e_ServiceActivities = 1;
+    sigma_e_RetailSales = 1;
+    sigma_e_EquipmentInvestment = 1;
+    sigma_e_ConstructionCompleted = 1;
+    sigma_e_UnemploymentBenefitApplications = 1;
+    sigma_e_CustomsExportAmount = 1;
+    sigma_e_GDP = 1;
+    sigma_e_GNI = 1;
 end;
 varobs
     AllIndustryProduction_OBS
